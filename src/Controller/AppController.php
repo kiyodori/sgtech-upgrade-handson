@@ -6,7 +6,7 @@ use Cake\Event\Event;
 
 class AppController extends Controller
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

@@ -39,9 +39,9 @@ class ItemsController extends AppController
 
     public function add()
     {
-        $item = $this->Items->newEntity();
+        $item = $this->Items->newEmptyEntity();
         if ($this->request->is('post')) {
-            $item = $this->Items->patchEntity($item, $this->request->data());
+            $item = $this->Items->patchEntity($item, $this->request->getData());
             if ($this->Items->save($item)) {
                 $this->Flash->success('備品を登録しました。');
 
@@ -56,7 +56,7 @@ class ItemsController extends AppController
     {
         $item = $this->Items->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $item = $this->Items->patchEntity($item, $this->request->data());
+            $item = $this->Items->patchEntity($item, $this->request->getData());
             if ($this->Items->save($item)) {
                 $this->Flash->success('備品を更新しました。');
 

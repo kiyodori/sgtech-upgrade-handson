@@ -7,7 +7,7 @@ use Cake\Validation\Validator;
 
 class ItemsTable extends Table
 {
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -20,7 +20,7 @@ class ItemsTable extends Table
         $this->hasMany('Loans');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence('code', 'create')

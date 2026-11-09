@@ -16,7 +16,7 @@ class LoansController extends AppController
             return $this->redirect(['controller' => 'Items', 'action' => 'view', $item->id]);
         }
 
-        $loan = $this->Loans->newEntity();
+        $loan = $this->Loans->newEmptyEntity();
         if ($this->request->is('post')) {
             $accessories = $this->request->getData('accessories');
 

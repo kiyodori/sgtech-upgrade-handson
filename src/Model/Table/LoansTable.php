@@ -6,7 +6,7 @@ use Cake\Validation\Validator;
 
 class LoansTable extends Table
 {
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -19,7 +19,7 @@ class LoansTable extends Table
         $this->belongsTo('Users');
     }
 
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence('due_on', 'create')

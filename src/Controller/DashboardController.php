@@ -13,7 +13,7 @@ class DashboardController extends AppController
 
         // 件数の集計は重いので10分キャッシュする
         $counts = Cache::read('dashboard_counts');
-        if ($counts === false) {
+        if ($counts === null) {
             $counts = [
                 'loaned' => $Loans->find()
                     ->where(['Loans.returned_on IS' => null])
