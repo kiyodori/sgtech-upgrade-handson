@@ -18,7 +18,7 @@ class LoansController extends AppController
 
         $loan = $this->Loans->newEmptyEntity();
         if ($this->request->is('post')) {
-            $accessories = $this->request->getData('accessories');
+            $accessories = $this->request->getData('accessories') ?? [];
 
             $loan = $this->Loans->patchEntity($loan, [
                 'due_on' => $this->request->getData('due_on'),

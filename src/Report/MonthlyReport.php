@@ -9,6 +9,11 @@ use Cake\I18n\FrozenDate;
  */
 class MonthlyReport
 {
+    public $loanCount = 0;
+    public $overdueCount = 0;
+    public $ranking;
+    public $title = '';
+
     private $Loans;
     private $month;
 

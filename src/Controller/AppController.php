@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 
 class AppController extends Controller
 {
@@ -24,7 +24,7 @@ class AppController extends Controller
         ]);
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
 

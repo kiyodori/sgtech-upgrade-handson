@@ -3,12 +3,15 @@ namespace App\Controller;
 
 use App\Model\Entity\Item;
 use Cake\ORM\Query;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ItemsController extends AppController
 {
     public function index()
     {
-        $status = $this->request->getQuery('status', '');
+        // 開いたときは貸出可だけを出す。「すべて」を選ぶと全件を出す
+        $status = $this->request->getQuery('status', (string)Item::STATUS_AVAILABLE);
 
         $items = $this->filterByStatus($this->Items->find(), $status)
             ->order(['Items.code' => 'ASC'])
@@ -32,7 +35,7 @@ class ItemsController extends AppController
         foreach ($item->loans as $loan) {
             $names[] = $loan->user->name;
         }
-        $borrowers = implode(array_unique($names), '、');
+        $borrowers = implode('、', array_unique($names));
 
         $this->set(compact('item', 'borrowers'));
     }
@@ -69,13 +72,13 @@ class ItemsController extends AppController
 
     public function export()
     {
-        $status = $this->request->getQuery('status', '');
+        $status = $this->request->getQuery('status', (string)Item::STATUS_AVAILABLE);
         $items = $this->filterByStatus($this->Items->find(), $status)
             ->order(['Items.code' => 'ASC'])
             ->all();
 
-        $excel = new \PHPExcel();
-        $sheet = $excel->getActiveSheet();
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
         $sheet->setTitle('備品一覧');
         $sheet->fromArray(['管理番号', '名前', '分類', '状態', '備考'], null, 'A1');
         $row = 2;
@@ -93,7 +96,7 @@ class ItemsController extends AppController
             $sheet->getColumnDimension($col)->setWidth($width);
         }
 
-        $writer = \PHPExcel_IOFactory::createWriter($excel, 'Excel2007');
+        $writer = new Xlsx($spreadsheet);
         ob_start();
         $writer->save('php://output');
         $body = ob_get_clean();
@@ -106,12 +109,11 @@ class ItemsController extends AppController
 
     private function filterByStatus(Query $query, $status)
     {
-        if ($status == Item::STATUS_AVAILABLE) {
-            $query->where(['Items.status' => Item::STATUS_AVAILABLE]);
-        } elseif ($status == Item::STATUS_LOANED) {
-            $query->where(['Items.status' => Item::STATUS_LOANED]);
-        } elseif ($status == Item::STATUS_REPAIR) {
-            $query->where(['Items.status' => Item::STATUS_REPAIR]);
+        if ($status === '') {
+            return $query;
+        }
+        if (array_key_exists((int)$status, Item::STATUS_LABELS)) {
+            $query->where(['Items.status' => (int)$status]);
         }
 
         return $query;
