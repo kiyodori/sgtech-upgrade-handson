@@ -1,0 +1,25 @@
+{
+    "name": "kiyodori/sgtech-upgrade-handson",
+    "description": "SGTech 勉強会 #1 ハンズオン用の備品貸出管理アプリ",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "cakephp/cakephp": "3.10.*",
+        "phpoffice/phpexcel": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "policy": {
+            "advisories": {
+                "block": false
+            }
+        }
+    }
+}

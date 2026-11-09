@@ -1,0 +1,5 @@
+#!/bin/sh
+# アプリを http://localhost:8765 で起動する
+cd "$(dirname "$0")/.."
+php -v | head -1
+exec php -S 0.0.0.0:8765 -t webroot webroot/index.php

@@ -1,0 +1,15 @@
+#!/bin/sh
+# 依存パッケージを入れ、データベースを初期データで作り直す
+set -e
+cd "$(dirname "$0")/.."
+
+composer install --no-interaction
+
+mkdir -p db logs tmp/cache/models tmp/cache/persistent tmp/sessions
+rm -f db/app.sqlite
+sqlite3 db/app.sqlite < config/schema/app.sql
+sqlite3 db/app.sqlite < config/schema/seed.sql
+find tmp/cache -type f ! -name .gitkeep -delete
+
+echo ""
+echo "準備ができました。bin/serve でアプリを起動してください。"

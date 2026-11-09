@@ -1,0 +1,14 @@
+{
+  "name": "sgtech-upgrade-handson",
+  "build": { "dockerfile": "Dockerfile" },
+  "forwardPorts": [8765],
+  "portsAttributes": {
+    "8765": { "label": "備品貸出管理", "onAutoForward": "openPreview" }
+  },
+  "postCreateCommand": "bin/setup",
+  "customizations": {
+    "vscode": {
+      "extensions": ["bmewburn.vscode-intelephense-client"]
+    }
+  }
+}

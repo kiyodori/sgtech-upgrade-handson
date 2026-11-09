@@ -1,0 +1,16 @@
+#!/bin/sh
+# 使い方: php-switch 7.4 / php-switch 8.3
+set -e
+if [ -z "$1" ]; then
+  echo "使い方: php-switch 7.4 または php-switch 8.3"
+  php -v | head -1
+  exit 1
+fi
+if [ ! -x "/usr/bin/php$1" ]; then
+  echo "PHP $1 は入っていません（7.4 と 8.3 が使えます）"
+  exit 1
+fi
+SUDO=""
+[ "$(id -u)" -ne 0 ] && SUDO="sudo"
+$SUDO update-alternatives --set php "/usr/bin/php$1" >/dev/null 2>&1
+php -v | head -1
