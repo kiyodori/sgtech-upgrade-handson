@@ -1,17 +1,12 @@
 <?php
-use Cake\Http\Middleware\CsrfProtectionMiddleware;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
+use Cake\Routing\RouteBuilder;
 
-Router::defaultRouteClass(DashedRoute::class);
+return function (RouteBuilder $routes): void {
+    $routes->setRouteClass(DashedRoute::class);
 
-Router::scope('/', function (RouteBuilder $routes) {
-    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true,
-    ]));
-    $routes->applyMiddleware('csrf');
-
-    $routes->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
-    $routes->fallbacks(DashedRoute::class);
-});
+    $routes->scope('/', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Dashboard', 'action' => 'index']);
+        $builder->fallbacks();
+    });
+};
