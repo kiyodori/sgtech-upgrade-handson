@@ -4,6 +4,13 @@
 
 社内のノート PC やプロジェクター、カメラなどの備品を、社員が借りて返すための小さな業務アプリです。CakePHP 3.10 と PHP 7.4 で動いています。
 
+2026年10月、PHP に、認証なしで外部から任意のプログラムを実行される脆弱性（CVE-2026-109618、CVE-2026-109619）が公表されました。PHP 7.4 には修正版が出ていません。対応するには、修正版の出ている PHP 8.3.36 以上に上げる必要があります。
+
+- [PHP 8.3.36 Release Announcement](https://www.php.net/releases/8_3_36.php)
+- [PHP 8 ChangeLog（8.3.36）](https://www.php.net/ChangeLog-8.php#8.3.36)
+
+ハンズオンでは、このアプリを PHP 8.3.36 で動くところまで上げてみます。
+
 ## 始め方
 
 1. このリポジトリの「Code」ボタンから「Codespaces」タブを開き、「Create codespace on main」を押します。
