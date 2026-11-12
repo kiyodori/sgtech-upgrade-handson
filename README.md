@@ -135,3 +135,25 @@ bin/setup
 </details>
 
 最後に、隠していた警告を見てみます。`config/app.php` の `errorLevel` を `E_ALL` に変え、画面を一通り開いてから `logs/debug.log` を見ます。警告は直さずに、一覧で見るだけで構いません。
+
+## Claude Code に手伝ってもらうとき
+
+Codespace のターミナルで Claude Code を動かすと、Claude が直したコードをそのまま `bin/serve` で確かめられます。Claude Code を使うには、Claude の有料プラン（Pro、Max など）か、Anthropic Console の API キーが必要です。
+
+1. ターミナルで Claude Code を入れます。
+
+   ```bash
+   curl -fsSL https://claude.ai/install.sh | bash
+   ```
+
+2. 新しいターミナルを開き、リポジトリのフォルダで起動します。
+
+   ```bash
+   claude
+   ```
+
+3. 初回はログインを求められます。表示されたリンクを手元のブラウザで開いてログインします。ブラウザにコードが表示されたら、ターミナルの `Paste code here if prompted` に貼り付けます。
+
+アプリを動かしながら Claude を使うときは、ターミナルを2つ開き、片方で `bin/serve`、もう片方で `claude` を動かします。
+
+詳しくは [Claude Code のセットアップ手順](https://code.claude.com/docs/en/setup) を見てください。
