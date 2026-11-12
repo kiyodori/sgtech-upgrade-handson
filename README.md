@@ -117,18 +117,31 @@ git switch -f step3-php8
 php-switch 8.3
 ```
 
-```bash
-bin/setup
-```
+次の順番で進めます。
 
-`composer install` が失敗します。原因を読み、動く状態にしてから `bin/serve` で起動し、すべての画面を試します。
+1. `bin/setup` を実行すると、`composer install` が失敗します。
+
+   ```bash
+   bin/setup
+   ```
+
+2. エラーの「Problem」を読み、PHP 8.3 に対応していないパッケージを見つけます。
+3. `composer.json` を書き換えます。
+4. `composer update` で、依存パッケージをまとめて更新します。
+
+   ```bash
+   composer update
+   ```
+
+5. 成功したら、もう一度 `bin/setup` を実行してから `bin/serve` で起動し、すべての画面を試します。
 
 - エラーにならなくても、表示が変わっている画面があります。
 
 <details>
 <summary>ヒント</summary>
 
-- PHPExcel は開発が終わっていて、PHP 8 に対応していません。後継の PhpSpreadsheet に置き換えます。`composer.json` を書き換えたあと、`composer update` で依存パッケージをまとめて更新します。
+- PHPExcel は開発が終わっていて、PHP 8 に対応していません。後継の PhpSpreadsheet に置き換えます。
+- エラーの最後に出る「Please run composer update」は、`composer.json` を書き換えずに実行しても解決しません。
 - PHP 8 では、警告で済んでいた書き方の一部がエラーになりました。
 - PHP 8 では、数値と文字列を `==` で比べたときの結果が変わりました。
 
@@ -136,9 +149,13 @@ bin/setup
 
 最後に、隠していた警告を見てみます。`config/app.php` の `errorLevel` を `E_ALL` に変え、画面を一通り開いてから `logs/debug.log` を見ます。警告は直さずに、一覧で見るだけで構いません。
 
-## Claude Code に手伝ってもらうとき
+## AI の使い方
 
-Codespace のターミナルで Claude Code を動かすと、Claude が直したコードをそのまま `bin/serve` で確かめられます。Claude Code を使うには、Claude の有料プラン（Pro、Max など）か、Anthropic Console の API キーが必要です。
+詰まったら、ブラウザに出たエラーをコピーして、好きな AI に貼って聞いて構いません。Codespace の中の Copilot Chat も使えます。
+
+### Claude Code をすでに使っている人へ
+
+Codespace のターミナルで Claude Code を動かすと、直したコードをそのまま `bin/serve` で確かめられます。Claude の有料プラン（Pro、Max など）か、Anthropic Console の API キーが必要です。
 
 1. ターミナルで Claude Code を入れます。
 
@@ -157,3 +174,15 @@ Codespace のターミナルで Claude Code を動かすと、Claude が直し�
 アプリを動かしながら Claude を使うときは、ターミナルを2つ開き、片方で `bin/serve`、もう片方で `claude` を動かします。
 
 詳しくは [Claude Code のセットアップ手順](https://code.claude.com/docs/en/setup) を見てください。
+
+## 困ったとき
+
+| 起きたこと | 対処 |
+|---|---|
+| Command+W（Windows は Ctrl+W）でブラウザのタブごと閉じてしまった | github.com/codespaces から開き直せます。作業内容は残っています |
+| `bin/serve` で「Address already in use」と出る | 前に起動したサーバーが動いています。`pkill -f "php -S"` で止めてから起動し直します |
+| PHP やブランチを切り替えたのに画面が変わらない | サーバーを Ctrl+C で止め、`bin/serve` で起動し直します |
+
+## 終わったら
+
+Codespace は、止めたままでも GitHub の無料枠のストレージを使い続けます。ハンズオンが終わったら、[github.com/codespaces](https://github.com/codespaces) を開き、使った Codespace の右にある「…」から「Delete」を選んで削除してください。
